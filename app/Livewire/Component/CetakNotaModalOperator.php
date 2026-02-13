@@ -101,6 +101,32 @@ class CetakNotaModalOperator extends Component
         $this->closeModal();
     }
 
+    public function cetakLangsung()
+    {
+        // dd('diklik');
+        if (!$this->pelanggan_id || !$this->tanggal) {
+            flash()
+                ->option('position', 'top-right')
+                ->option('timeout', 3000)
+                ->error('Pilih Penyetor terlebih dahulu');
+            return;
+        }
+
+        $url = route('operator.nota.cetak', [
+            'penyetor' => $this->pelanggan_id,
+            'tanggal'      => $this->tanggal,
+        ]);
+
+        $this->dispatch('print-pdf', url: $url);
+
+        flash()
+            ->option('position', 'top-right')
+            ->option('timeout', 6000)
+            ->success('Nota berhasil dicetak');
+
+        $this->closeModal();
+    }
+
     public function render()
     {
         return view('livewire.component.cetak-nota-modal-operator');

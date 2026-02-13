@@ -89,6 +89,12 @@
                 <!-- Footer -->
                 <div class="flex items-center justify-end border-t border-default pt-4 space-x-3">
 
+                    <button wire:click="cetakLangsung" class="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded-base text-sm font-medium">
+                        <svg class="w-5 h-5 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M16.444 18H19a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.556M17 11V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v6h10ZM7 15h10v4a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-4Z" />
+                        </svg>
+                    </button>
+
                     <button wire:click="cetak" class="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded-base text-sm font-medium">
                         Cetak Nota
                     </button>
@@ -103,9 +109,31 @@
         </div>
     </div>
     <script>
+        // Open in New Tab Nota PDF
         document.addEventListener('livewire:initialized', () => {
             Livewire.on('open-new-tab', (data) => {
                 window.open(data.url, '_blank');
+            });
+        });
+
+        // Auto Print PDF Tanpa Pindah Halamn 
+        document.addEventListener('livewire:initialized', () => {
+            Livewire.on('print-pdf', (data) => {
+                let iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = data.url;
+                document.body.appendChild(iframe);
+
+                iframe.onload = function() {
+                    iframe.contentWindow.focus();
+                    iframe.contentWindow.print();
+
+                    iframe.contentWindow.onafterprint = function() {
+                        document.body.removeChild(iframe);
+
+                        Livewire.dispatch('print-success');
+                    };
+                };
             });
         });
 
