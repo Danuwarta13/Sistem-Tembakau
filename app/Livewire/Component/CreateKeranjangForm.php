@@ -22,7 +22,7 @@ class CreateKeranjangForm extends Component
 
     public $no_seri = '';
 
-    #[Validate('required|string|min:1')]
+    #[Validate('required|string|min:1|regex:/^[A-Za-z]+$/')]
     public $grade = '';
 
     #[Validate('required|numeric')]
@@ -81,6 +81,9 @@ class CreateKeranjangForm extends Component
     {
         // Ubaah grade ke huruf kapital
         $this->grade = strtoupper($this->grade);
+
+        // Validasi hanya huruf
+        $this->validateOnly('grade');
 
         // Ambil no seri terakhir berdasarkan grade
         $last = Barangs::where('grade', $this->grade)->max('no_seri');

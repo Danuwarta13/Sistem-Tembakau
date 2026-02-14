@@ -38,7 +38,7 @@ class CetakNotaModalOperator extends Component
     }
 
     // Event listener untuk menangani pelanggan baru dibuat dari modal
-    #[On('pelanggan-created')]
+    #[On('penyetor-created')]
     public function mount()
     {
         $this->pelanggans = Pelanggans::all();

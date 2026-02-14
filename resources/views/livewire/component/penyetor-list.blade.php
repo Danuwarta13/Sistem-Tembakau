@@ -20,9 +20,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
                     </svg>
                 </div>
-                <input wire:model.live.debounce.300ms="query" type="search" class="w-full pl-10 pr-4 py-1.5 bg-neutral-secondary-medium  backdrop-blur-md border border-default-medium
-                          rounded-xl shadow-sm placeholder-slate-400 
-                          focus:border-emerald-500 focus:ring-4 focus:ring-emerald-200 transition" placeholder="Cari penyetor...">
+                <input wire:model.live.debounce.300ms="query" type="search" class="w-full pl-10 pr-4 py-1.5 bg-neutral-secondary-medium  backdrop-blur-md border border-default-medium rounded-xl shadow-sm placeholder-slate-400 dark:text-slate-100 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-200 transition" placeholder="Cari penyetor...">
             </div>
         </div>
     </form>

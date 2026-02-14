@@ -65,7 +65,7 @@
             {{-- Grade --}}
             <div>
                 <label for="grade" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-white ">Grade</label>
-                <input wire:model.live="grade" type="text" id="grade" class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading
+                <input wire:model.live="grade" type="text" id="grade" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')" class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading
                            focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm" />
                 @error('grade')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
