@@ -10,11 +10,11 @@
             <div class="grid gap-6 mb-6 md:grid-cols-2">
                 <div>
                     <label for="lap" class="block mb-2.5 text-sm font-medium text-heading">LAP</label>
-                    <input wire:model="lap" type="text" id="lap" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="" required />
+                    <input wire:model="lap" type="text" id="lap" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-green-500 focus:border-green-500 block w-full px-3 py-2.5 shadow-xs placeholder:text-body dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white" placeholder="" required />
                 </div>
                 <div>
                     <label for="grade" class="block mb-2.5 text-sm font-medium text-heading">GRADE</label>
-                    <select wire:model="grade" id="grade" class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
+                    <select wire:model="grade" id="grade" class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-green-500 focus:border-green-500 shadow-xs placeholder:text-body dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white">
                         <option selected>-- Pilih Grade --</option>
                         @foreach ($grades as $g)
                         <option value="{{ $g }}">{{ $g }}</option>
@@ -23,16 +23,16 @@
                 </div>
                 <div>
                     <label for="seriStart" class="block mb-2.5 text-sm font-medium text-heading">No Seri Start</label>
-                    <input wire:model.live="seriStart" type="number" id="seriStart" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="" required />
+                    <input wire:model.live="seriStart" type="number" id="seriStart" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-green-500 focus:border-green-500 block w-full px-3 py-2.5 shadow-xs placeholder:text-body dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white" placeholder="" required />
                 </div>
                 <div>
                     <label for="seriEnd" class="block mb-2.5 text-sm font-medium text-heading">No Seri End</label>
-                    <input wire:model="seriEnd" type="text" id="seriEnd" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="" readonly />
+                    <input wire:model="seriEnd" type="text" id="seriEnd" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-green-500 focus:border-green-500 block w-full px-3 py-2.5 shadow-xs placeholder:text-body dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white" placeholder="" readonly />
                 </div>
 
             </div>
 
-            <button type="submit" class="text-white flex items-center bg-green-500 box-border border border-transparent hover:bg-green-600 focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
+            <button type="submit" class="text-white flex items-center bg-green-500 box-border border border-transparent hover:bg-green-600 focus:ring-4 focus:ring-green-300 shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">
                 <svg class="w-4 h-4 me-0.5 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 10V4a1 1 0 0 0-1-1H9.914a1 1 0 0 0-.707.293L5.293 7.207A1 1 0 0 0 5 7.914V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2M10 3v4a1 1 0 0 1-1 1H5m5 6h9m0 0-2-2m2 2-2 2" />
                 </svg>

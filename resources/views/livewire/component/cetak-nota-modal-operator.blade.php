@@ -25,7 +25,7 @@
 
                     {{-- Dropdown pelanggan --}}
                     <div>
-                        <label class="block mb-2.5 text-sm font-medium text-heading">Pilih Penyetor</label>
+                        <label class="block mb-2.5 text-sm font-medium text-heading dark:text-white">Pilih Penyetor</label>
                         <select wire:model.live="pelanggan_id" class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
                             <option value="">-- Pilih Penyetor --</option>
                             @foreach($pelanggans as $p)
@@ -47,7 +47,7 @@
                     {{-- List barang setelah pelanggan dipilih --}}
                     @if($pelanggan_id && count($barangs) > 0)
                     <div>
-                        <h4 class="text-md font-semibold mb-2">Barang Milik Pelanggan:</h4>
+                        <h4 class="text-md font-semibold mb-2 dark:text-white">Barang Milik Pelanggan:</h4>
 
                         <div class="max-h-80 overflow-y-auto">
                             <table class="min-w-full text-sm text-left rtl:text-right text-body">

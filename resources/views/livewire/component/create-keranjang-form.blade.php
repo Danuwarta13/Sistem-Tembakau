@@ -20,8 +20,7 @@
             {{-- Tanggal --}}
             <div>
                 <label for="tanggal" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-white ">Tanggal</label>
-                <input wire:model.live="tanggal" type="date" id="tanggal" class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading
-                           focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm" />
+                <input wire:model.live="tanggal" type="date" id="tanggal" class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white" />
                 @error('tanggal')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
@@ -31,7 +30,7 @@
             <div>
                 <label for="pelanggan_id" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-white ">Pilih Penyetor</label>
                 <select wire:model.live="pelanggan_id" id="pelanggan_id" class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading
-                           focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm">
+                           focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white">
                     <option selected>Pilih Nama</option>
                     @foreach($pelanggans as $pelanggan)
                     <option value="{{ $pelanggan->id }}">{{ $pelanggan->nama }}</option>
@@ -45,8 +44,7 @@
             {{-- Nama --}}
             <div>
                 <label for="nama" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-white ">Nama</label>
-                <input wire:model="nama" type="text" id="nama" readonly class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading
-                           focus:ring-green-500 focus:border-green-500 shadow-sm" />
+                <input wire:model="nama" type="text" id="nama" readonly class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading focus:ring-green-500 focus:border-green-500 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white" />
                 @error('nama')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
@@ -56,7 +54,7 @@
             <div>
                 <label for="daerah" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-white ">Daerah</label>
                 <input wire:model="daerah" type="text" id="daerah" readonly class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading
-                           focus:ring-green-500 focus:border-green-500 shadow-sm" />
+                           focus:ring-green-500 focus:border-green-500 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white" />
                 @error('daerah')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
@@ -65,8 +63,7 @@
             {{-- Grade --}}
             <div>
                 <label for="grade" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-white ">Grade</label>
-                <input wire:model.live="grade" type="text" id="grade" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')" class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading
-                           focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm" />
+                <input wire:model.live="grade" type="text" id="grade" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')" class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white" />
                 @error('grade')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
@@ -75,8 +72,7 @@
             {{-- No Seri --}}
             <div>
                 <label for="no_seri" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-white ">No Seri</label>
-                <input wire:model="no_seri" type="text" id="no_seri" readonly class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading
-                           focus:ring-green-500 focus:border-green-500 shadow-sm" />
+                <input wire:model="no_seri" type="text" id="no_seri" readonly class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading focus:ring-green-500 focus:border-green-500 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white" />
                 @error('no_seri')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
@@ -85,8 +81,7 @@
             {{-- Bruto --}}
             <div>
                 <label for="bruto" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-white ">Bruto</label>
-                <input wire:model.live="bruto" type="text" id="bruto" class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading
-                           focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm" />
+                <input wire:model.live="bruto" type="text" id="bruto" class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white" />
                 @error('bruto')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
@@ -95,8 +90,7 @@
             {{-- Netto --}}
             <div>
                 <label for="netto" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-white ">Netto</label>
-                <input wire:model="netto" type="text" id="netto" readonly class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading
-                           focus:ring-green-500 focus:border-green-500 shadow-sm" />
+                <input wire:model="netto" type="text" id="netto" readonly class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading focus:ring-green-500 focus:border-green-500 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white" />
                 @error('netto')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
@@ -105,8 +99,7 @@
             {{-- Harga --}}
             <div>
                 <label for="harga" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-white ">Harga (Rp)</label>
-                <input wire:model.live="harga" type="number" id="harga" class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading
-                           focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm" />
+                <input wire:model.live="harga" type="number" id="harga" class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white" />
                 @error('harga')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
@@ -115,8 +108,7 @@
             {{-- Jumlah --}}
             <div>
                 <label for="jumlah" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-white ">Jumlah (Rp)</label>
-                <input wire:model.live="jumlah" type="text" id="jumlah" readonly class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading
-                           focus:ring-green-500 focus:border-green-500 shadow-sm" />
+                <input wire:model.live="jumlah" type="text" id="jumlah" readonly class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading focus:ring-green-500 focus:border-green-500 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white" />
                 @error('jumlah')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
