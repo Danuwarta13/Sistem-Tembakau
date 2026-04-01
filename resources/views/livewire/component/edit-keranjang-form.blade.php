@@ -5,11 +5,11 @@
 
     {{-- Modal --}}
     <div x-show="open" x-cloak class="fixed inset-0 flex items-center justify-center z-50">
-        <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative w-full max-w-md max-h-[90vh] mx-2 sm:mx-4 md:mx-auto">
             <!-- Modal content -->
-            <div class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6">
+            <div class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm flex flex-col max-h-[90vh] p-3 sm:p-4 md:p-6">
                 <!-- Modal header -->
-                <div class="flex items-center justify-between border-b border-default pb-2 md:pb-2">
+                <div class="flex items-center justify-between border-b border-default pb-2 shrink-0">
                     <h3 class="text-lg font-medium text-heading">
                         Edit Keranjang
                     </h3>
@@ -20,8 +20,8 @@
                     </button>
                 </div>
                 <!-- Modal body -->
-                <form wire:submit.prevent="update" action="#">
-                    <div class="grid gap-4 mt-2 mb-4 sm:grid-cols-2">
+                <form wire:submit.prevent="update" action="#" class="flex flex-col flex-1 overflow-hidden ">
+                    <div class="grid gap-4 mt-2 mb-4 sm:grid-cols-2 overflow-y-auto flex-1 pr-1 no-scrollbar">
                         <div>
                             <label for="tanggal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal</label>
                             <input wire:model="tanggal" type="date" id="tanggal" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
@@ -79,14 +79,16 @@
                         </div>
 
                     </div>
-                    <div class="flex items-center space-x-4">
+
+                    {{-- Footer --}}
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-4 border-t border-default pt-3 shrink-0">
                         {{-- Update --}}
-                        <button type="submit" class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <button type="submit" class="w-full sm:w-auto text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             Update product
                         </button>
 
                         {{-- Delete --}}
-                        <button type="button" wire:click="confirmDelete" class="text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
+                        <button type="button" wire:click="confirmDelete" class="w-full sm:w-auto text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
                             <svg class="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path>
                             </svg>

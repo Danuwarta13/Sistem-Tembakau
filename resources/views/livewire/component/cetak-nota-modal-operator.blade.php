@@ -4,13 +4,14 @@
 
     <!-- Modal -->
     <div x-show="open" x-cloak class="fixed inset-0 z-50 flex items-center justify-center">
-        <div class="relative w-full max-w-2xl max-h-full">
+        <div class="relative w-full max-w-2xl max-h-[90vh] mx-2 sm:mx-4 md:mx-auto">
             <!-- Modal content -->
-            <div class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6">
+            <div class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-3 sm:p-4 md:p-6 flex flex-col max-h-[90vh]">
 
                 <!-- Header -->
-                <div class="flex items-center justify-between border-b border-default pb-4">
-                    <h3 class="text-lg font-semibold text-heading">
+                <div class="flex items-center justify-between border-b border-default pb-4 shrink-0">
+
+                    <h3 class="text-base sm:text-lg font-semibold text-heading">
                         Cetak Nota Penyetor
                     </h3>
                     <button type="button" wire:click="closeModal" class="text-body hover:bg-neutral-tertiary hover:text-heading rounded-base text-sm w-9 h-9 flex items-center justify-center">
@@ -21,8 +22,7 @@
                 </div>
 
                 <!-- Body -->
-                <div class="space-y-3 py-3">
-
+                <div class="space-y-3 py-3 overflow-y-auto flex-1 no-scrollbar">
                     {{-- Dropdown pelanggan --}}
                     <div>
                         <label class="block mb-2.5 text-sm font-medium text-heading dark:text-white">Pilih Penyetor</label>
@@ -49,7 +49,7 @@
                     <div>
                         <h4 class="text-md font-semibold mb-2 dark:text-white">Barang Milik Pelanggan:</h4>
 
-                        <div class="max-h-80 overflow-y-auto">
+                        <div class="max-h-44 overflow-y-auto overflow-x-auto">
                             <table class="min-w-full text-sm text-left rtl:text-right text-body">
                                 <thead class="text-sm text-body text-center bg-neutral-secondary-medium border-b border-t border-default-medium">
                                     <tr>
@@ -87,19 +87,19 @@
                 </div>
 
                 <!-- Footer -->
-                <div class="flex items-center justify-end border-t border-default pt-4 space-x-3">
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-end border-t border-default pt-4 gap-2 sm:gap-3 shrink-0">
 
-                    <button wire:click="cetakLangsung" class="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded-base text-sm font-medium">
+                    {{-- <button wire:click="cetakLangsung" class="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded-base text-sm font-medium">
                         <svg class="w-5 h-5 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M16.444 18H19a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.556M17 11V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v6h10ZM7 15h10v4a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-4Z" />
                         </svg>
-                    </button>
+                    </button> --}}
 
-                    <button wire:click="cetak" class="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded-base text-sm font-medium">
+                    <button wire:click="cetak" class="text-white bg-green-500 hover:bg-green-600 px-4 py-2 rounded-base text-sm font-medium w-full sm:w-auto">
                         Cetak Nota
                     </button>
 
-                    <button wire:click="closeModal" class="text-body bg-neutral-secondary-medium hover:bg-neutral-tertiary-medium px-4 py-2 rounded-base text-sm">
+                    <button wire:click="closeModal" class="text-body bg-neutral-secondary-medium hover:bg-neutral-tertiary-medium px-4 py-2 rounded-base text-sm w-full sm:w-auto">
                         Tutup
                     </button>
 
