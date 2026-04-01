@@ -5,7 +5,7 @@
     {{-- Title --}}
     <div class=" text-center ">
         <h1 class=" text-lg font-bold tracking-tight text-heading md:text-lg lg:text-2xl">Data Keranjang</h1>
-        <p class=" text-lg font-normal text-body lg:text-sm sm:px-16 xl:px-48">Here at Flowbite we focus on markets where technology.</p>
+        <p class=" text-sm font-normal text-body lg:text-sm sm:px-16 xl:px-48">Here at Flowbite we focus on markets where technology.</p>
     </div>
 
     {{-- Search --}}
@@ -20,8 +20,8 @@
                 <input wire:model.live.debounce.250ms="query" type="search" id="input-group-1" class="block w-full max-w-96 ps-9 pe-3 py-2 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:border-emerald-500 focus:ring-4 focus:ring-emerald-200 px-3 shadow-xs placeholder:text-body dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white" placeholder="Search">
             </div>
         </form>
-        <button wire:click="$dispatch('open-cetak-nota-modal')" class="inline-flex items-center justify-center text-white bg-green-600 hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-base text-sm px-3 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button">
-            <svg class="w-5 h-5 me-1 -ms-0.5 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <button wire:click="$dispatch('open-cetak-nota-modal')" class="inline-flex items-center justify-center text-white bg-green-600 hover:bg-green-500 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-base text-sm ms-1.5 px-1.5 py-2 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" type="button">
+            <svg class=" hidden sm:block w-5 h-5 me-1 -ms-0.5 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M16.444 18H19a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h2.556M17 11V5a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v6h10ZM7 15h10v4a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-4Z" />
             </svg>
             Cetak Nota
