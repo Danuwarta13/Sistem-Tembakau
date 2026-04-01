@@ -81,7 +81,7 @@
             {{-- Bruto --}}
             <div>
                 <label for="bruto" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-white ">Bruto</label>
-                <input wire:model.live="bruto" type="text" id="bruto" class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white" />
+                <input wire:model.live="bruto" type="number" id="bruto" class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white" />
                 @error('bruto')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
@@ -90,7 +90,7 @@
             {{-- Netto --}}
             <div>
                 <label for="netto" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-white ">Netto</label>
-                <input wire:model="netto" type="text" id="netto" readonly class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading focus:ring-green-500 focus:border-green-500 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white" />
+                <input wire:model="netto" type="number" id="netto" readonly class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading focus:ring-green-500 focus:border-green-500 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white" />
                 @error('netto')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
