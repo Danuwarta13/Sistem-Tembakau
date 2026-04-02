@@ -2,8 +2,9 @@
 
 namespace App\Livewire\Component;
 
-use Livewire\Component;
 use App\Models\Pelanggans;
+use Illuminate\Validation\ValidationException;
+use Livewire\Component;
 
 class CreatePenyetorModal extends Component
 {
@@ -30,29 +31,47 @@ class CreatePenyetorModal extends Component
 
     public function createNewPelanggan()
     {
-        // Validasi hanya properti modal pelanggan
-        $validated = $this->validate([
-            'newPelangganNama' => 'required|string|max:255',
-            'newPelangganDaerah' => 'required|string|max:255',
-        ]);
+        try {
+            $validated = $this->validate(
+                [
+                    'newPelangganNama' => 'required|string|max:255|unique:pelanggans,nama',
+                    'newPelangganDaerah' => 'required|string|max:255',
+                ],
+                [
+                    'newPelangganNama.required' => 'Nama pelanggan wajib diisi',
+                    'newPelangganNama.string' => 'Nama pelanggan harus berupa teks.',
+                    'newPelangganNama.unique' => 'Nama pelanggan sudah ada. Silakan gunakan nama lain.',
+                    'newPelangganDaerah.required' => 'Daerah pelanggan wajib diisi.',
+                    'newPelangganDaerah.string' => 'Daerah pelanggan harus berupa teks.',
+                ]
+            );
 
-        // Simpan data ke database
-        $pelanggan = Pelanggans::create([
-            'nama' => $validated['newPelangganNama'],
-            'daerah' => $validated['newPelangganDaerah'],
-        ]);
+            $pelanggan = Pelanggans::create([
+                'nama' => $validated['newPelangganNama'],
+                'daerah' => $validated['newPelangganDaerah'],
+            ]);
 
-        // reset input modal
-        $this->newPelangganNama = '';
-        $this->newPelangganDaerah = '';
+            $this->newPelangganNama = '';
+            $this->newPelangganDaerah = '';
 
-        // Notifikasi sukses
-        flash()
-            ->option('position', 'top-right')
-            ->option('timeout', 3000)
-            ->success('Data Penyetor berhasil ditambahkan.');
+            flash()
+                ->option('position', 'top-right')
+                ->option('timeout', 3000)
+                ->success('Data Penyetor berhasil ditambahkan.');
 
-        $this->dispatch('penyetor-created', pelanggan: $pelanggan);
+            $this->dispatch('penyetor-created', pelanggan: $pelanggan);
+        } catch (ValidationException $e) {
+
+            // Ambil semua pesan error
+            $errors = collect($e->validator->errors()->all())->join(', ');
+
+            flash()
+                ->option('position', 'top-right')
+                ->option('timeout', 4000)
+                ->error($errors);
+
+            throw $e; // supaya error tetap tampil di form (opsional)
+        }
     }
 
 

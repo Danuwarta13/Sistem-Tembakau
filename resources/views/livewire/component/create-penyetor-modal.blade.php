@@ -11,7 +11,7 @@
 
         <!-- Modal -->
         <div x-show="open" x-cloak class="fixed inset-0 z-50 flex items-center justify-center">
-            <div class="relative w-full max-w-2xl max-h-full">
+            <div class="relative w-full max-w-2xl max-h-[90vh] mx-2 sm:mx-4 md:mx-auto">
                 <!-- Modal content -->
                 <div class="relative bg-neutral-primary-soft border border-default rounded-base shadow-sm p-4 md:p-6">
                     <!-- Modal header -->

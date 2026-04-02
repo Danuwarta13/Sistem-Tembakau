@@ -24,12 +24,12 @@
                     <div class="space-y-4 mb-6 mt-4">
                         <div>
                             <label for="nama" class="block mb-2 text-sm font-medium text-heading">Nama</label>
-                            <input wire:model="nama" type="text" id="nama" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-green-300 focus:border-green-600 block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Nama Penyetor" required />
+                            <input wire:model="editNama" type="text" id="nama" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-green-300 focus:border-green-600 block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Nama Penyetor" required />
                         </div>
 
                         <div>
                             <label for="daerah" class="block mb-2 text-sm font-medium text-heading">Daerah</label>
-                            <input wire:model="daerah" type="text" id="daerah" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-green-300 focus:border-green-600 block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Daerah Penyetor" required />
+                            <input wire:model="editDaerah" type="text" id="daerah" class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-green-300 focus:border-green-600 block w-full px-3 py-2.5 shadow-xs placeholder:text-body" placeholder="Daerah Penyetor" required />
                         </div>
                     </div>
                     <div class="flex items-center space-x-4">

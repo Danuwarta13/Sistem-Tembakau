@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Component;
 
-use Livewire\Component;
 use App\Models\Pelanggans;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Validate;
+use Livewire\Component;
 
 class EditPenyetorForm extends Component
 {
@@ -15,6 +17,10 @@ class EditPenyetorForm extends Component
 
     #[Validate('required|string|min:1|max:255')]
     public $daerah;
+
+    //Form untuk Edit pelanggan baru
+    public $editNama;
+    public $editDaerah;
 
     protected $listeners = ['openEditPenyetorModal' => 'loadPenyetor'];
 
@@ -27,32 +33,60 @@ class EditPenyetorForm extends Component
 
         // Isi properti dengan data penyetor
         $this->penyetorId = $penyetor->id;
-        $this->nama = $penyetor->nama;
-        $this->daerah = $penyetor->daerah;
+        $this->editNama = $penyetor->nama;
+        $this->editDaerah = $penyetor->daerah;
 
         // Tampilkan modal edit
         $this->dispatch('showModal');
     }
 
     // Perbarui data penyetor
+
+
     public function update()
     {
-        // Validasi input
-        $validated = $this->validate();
+        try {
+            // Validasi dengan ignore ID
+            $validated = $this->validate([
+                'editNama' => [
+                    'required',
+                    'string',
+                    'max:255',
+                    Rule::unique('pelanggans', 'nama')->ignore($this->penyetorId),
+                ],
+                'editDaerah' => 'required|string|max:255',
+            ], [
+                'editNama.unique' => 'Nama pelanggan sudah ada, gunakan nama lain.',
+                'editNama.required' => 'Nama pelanggan wajib diisi.',
+                'editDaerah.required' => 'Daerah wajib diisi.',
+            ]);
 
-        // Update ke database
-        Pelanggans::find($this->penyetorId)->update($validated);
+            // Update data (mapping field)
+            Pelanggans::find($this->penyetorId)->update([
+                'nama' => $validated['editNama'],
+                'daerah' => $validated['editDaerah'],
+            ]);
 
-        // Tutup modal edit
-        $this->dispatch('hideModal');
+            // Tutup modal
+            $this->dispatch('hideModal');
 
-        flash()
-            ->option('position', 'top-right')
-            ->option('timeout', 3000)
-            ->success('Data pelanggan berhasil diperbarui.');
+            flash()
+                ->option('position', 'top-right')
+                ->option('timeout', 3000)
+                ->success('Data pelanggan berhasil diperbarui.');
 
-        // Beri tahu komponen induk bahwa data telah diperbarui
-        $this->dispatch('updated-penyetor');
+            $this->dispatch('updated-penyetor');
+        } catch (ValidationException $e) {
+
+            $errors = collect($e->validator->errors()->all())->join(', ');
+
+            flash()
+                ->option('position', 'top-right')
+                ->option('timeout', 4000)
+                ->error($errors);
+
+            throw $e; // biar tetap muncul di form
+        }
     }
 
     // Nonaktifkan modal hapus
