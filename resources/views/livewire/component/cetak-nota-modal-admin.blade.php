@@ -47,7 +47,7 @@
                     {{-- List barang setelah pelanggan dipilih --}}
                     @if($pelanggan_id && count($barangs) > 0)
                     <div>
-                        <h4 class="text-md font-semibold mb-2">Barang Milik Pelanggan:</h4>
+                        <h4 class="text-md font-semibold mb-2 dark:text-white">Barang Milik Pelanggan:</h4>
 
                         <div class="max-h-44 overflow-y-auto overflow-x-auto">
                             <table class="min-w-full text-sm text-left rtl:text-right text-body">
