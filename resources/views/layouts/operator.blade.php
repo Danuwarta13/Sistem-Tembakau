@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
 
     @vite('resources/css/app.css')
 </head>
+
 <body>
 
 
@@ -23,7 +25,8 @@
 
                     <a href="{{ route('operator.dashboard') }}" class="flex ms-2 md:me-24">
                         <img src="{{ asset('svg/logo.svg') }}" class="h-8 me-2" alt="FlowBite Logo" />
-                        <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">TembakauKu</span>
+                        <span
+                            class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">TembakauKu</span>
                     </a>
 
 
@@ -34,8 +37,8 @@
                     {{-- DarkMode --}}
                     @livewire('component.theme-toggle')
 
-                    {{-- button Fullscreen --}}
-                    @livewire('component.icon-fullscreen')
+                    {{-- button Printer --}}
+                    @livewire('component.icon-c-printer')
                 </div>
 
             </div>
@@ -91,4 +94,5 @@
 
 
 </body>
+
 </html>

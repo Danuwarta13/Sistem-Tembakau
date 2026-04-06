@@ -4,7 +4,7 @@ namespace App\Livewire\Component;
 
 use Livewire\Component;
 
-class IconFullscreen extends Component
+class IconCPrinter extends Component
 {
     public function toggleFullscreen()
     {
@@ -13,6 +13,6 @@ class IconFullscreen extends Component
 
     public function render()
     {
-        return view('livewire.component.icon-fullscreen');
+        return view('livewire.component.icon-c-printer');
     }
 }

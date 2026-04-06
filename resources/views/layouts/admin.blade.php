@@ -31,8 +31,8 @@
                     {{-- DarkMode --}}
                     @livewire('component.theme-toggle')
 
-                    {{-- button Fullscreen --}}
-                    @livewire('component.icon-fullscreen')
+                    {{-- button Printer --}}
+                    @livewire('component.icon-c-printer')
                 </div>
             </div>
         </div>
