@@ -17,7 +17,11 @@ class CetakNotaModalOperator extends Component
     public $pelanggans = [];
     public $barangs = [];
 
-    protected $listeners = ['open-cetak-nota-modal' => 'openModal'];
+    protected $listeners = [
+        'open-cetak-nota-modal' => 'openModal',
+        'printer-error' => 'printerError',
+        'printer-success' => 'printerSuccess'
+    ];
 
     public $open = false;
 
@@ -154,13 +158,26 @@ class CetakNotaModalOperator extends Component
 
         $this->dispatch('print-struk', data: $data);
 
-        flash()
-            ->option('position', 'top-right')
-            ->option('timeout', 6000)
-            ->success('Nota berhasil dicetak');
-
         $this->closeModal();
     }
+
+    public function printerSuccess()
+    {
+        flash()
+            ->option('position', 'top-right')
+            ->option('timeout', 2500)
+            ->success('Nota berhasil dicetak');
+    }
+
+    public function printerError()
+    {
+        flash()
+            ->option('position', 'top-right')
+            ->option('timeout', 2500)
+            ->error('Printer Belum Terhubung');
+    }
+
+
 
     public function render()
     {

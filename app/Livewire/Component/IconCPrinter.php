@@ -6,9 +6,14 @@ use Livewire\Component;
 
 class IconCPrinter extends Component
 {
-    public function toggleFullscreen()
+    protected $listeners = ['printer-connected' => 'printerConnected'];
+
+    public function printerConnected()
     {
-        $this->dispatch('fullscreen-toggle');
+        flash()
+            ->option('position', 'top-right')
+            ->option('timeout', 2000)
+            ->success('Printer berhasil terhubung');
     }
 
     public function render()

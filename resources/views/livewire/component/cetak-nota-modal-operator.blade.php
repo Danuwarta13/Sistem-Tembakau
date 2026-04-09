@@ -153,6 +153,9 @@
         //     });
         // });
 
+
+
+
         // Print Struk Bluetooth
         document.addEventListener('livewire:init', () => {
 
@@ -169,7 +172,7 @@
         async function printStruk(data) {
             try {
                 if (!characteristic) {
-                    alert("Connect dulu!");
+                    Livewire.dispatch('printer-error');
                     return;
                 }
 
@@ -284,6 +287,9 @@
                     await characteristic.writeValueWithoutResponse(encoder.encode(line));
                     await new Promise(r => setTimeout(r, 30));
                 }
+
+                Livewire.dispatch('printer-success');
+
 
             } catch (err) {
                 console.log(err);

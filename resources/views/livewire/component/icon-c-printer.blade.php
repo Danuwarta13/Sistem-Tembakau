@@ -51,7 +51,8 @@
                 console.log("PAKAI CHAR:", characteristic);
                 console.log("PROPERTIES:", characteristic.properties);
 
-                alert("Connected: " + (device.name || "Printer"));
+
+                Livewire.dispatch('printer-connected');
 
             } catch (err) {
                 console.log(err);
