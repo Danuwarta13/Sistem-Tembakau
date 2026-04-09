@@ -24,10 +24,11 @@
         // CONNECT (PAKSA PILIH DEVICE)
         async function connectPrinter() {
             console.log("connectPrinter");
+
             try {
                 device = await navigator.bluetooth.requestDevice({
-                    acceptAllDevices: true
-                    , optionalServices: [SERVICE_UUID]
+                    acceptAllDevices: true,
+                    optionalServices: [SERVICE_UUID]
                 });
 
                 const server = await device.gatt.connect();
@@ -35,12 +36,22 @@
 
                 const characteristics = await service.getCharacteristics();
 
-                console.log("CHAR:", characteristics);
+                console.log("SEMUA CHAR:", characteristics);
 
-                // ambil SEMBARANG dulu (biar pasti jalan)
-                characteristic = characteristics[0];
+                // 🔥 PILIH YANG SUPPORT WRITE
+                characteristic = characteristics.find(c =>
+                    c.properties.write || c.properties.writeWithoutResponse
+                );
 
-                alert("Connected: " + device.name);
+                if (!characteristic) {
+                    alert("Tidak ada characteristic yang bisa write!");
+                    return;
+                }
+
+                console.log("PAKAI CHAR:", characteristic);
+                console.log("PROPERTIES:", characteristic.properties);
+
+                alert("Connected: " + (device.name || "Printer"));
 
             } catch (err) {
                 console.log(err);

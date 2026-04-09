@@ -249,7 +249,7 @@
                 // ===== ITEMS =====
                 data.items.forEach((item, index) => {
                     lines.push(
-                        col(index + 1, 3) +
+                        col(item.no_seri, 3) +
                         col(item.grade, 3) +
                         col(angkaFix(item.bruto), 4) +
                         col(angkaFix(item.netto), 4) +
