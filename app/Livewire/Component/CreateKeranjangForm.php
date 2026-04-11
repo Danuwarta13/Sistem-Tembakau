@@ -43,6 +43,9 @@ class CreateKeranjangForm extends Component
     // Isi otomatis field berdasarkan data pelanggan baru
     public function fillPelanggan($pelanggan)
     {
+        // Refresh list pelanggan agar yang baru ditambahkan muncul di select dropdown
+        $this->pelanggans = Pelanggans::all()->toArray();
+
         // Ambil no seri terbaru untuk form Barang
         $this->pelanggan_id = $pelanggan['id'];
         $this->nama = $pelanggan['nama'];
@@ -55,8 +58,8 @@ class CreateKeranjangForm extends Component
     // Mount untuk menyiapkan data awal
     public function mount()
     {
-        // Ambil semua data pelanggan dari tabel pelanggans
-        $this->pelanggans = Pelanggans::all();
+        // Ambil semua data pelanggan dari tabel pelanggans sebagai array murni
+        $this->pelanggans = Pelanggans::all()->toArray();
         // Set tanggal default ke hari ini (format Y-m-d untuk input type="date")
         $this->tanggal = now()->format('Y-m-d');
     }

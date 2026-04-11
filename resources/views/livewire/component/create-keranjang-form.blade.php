@@ -27,15 +27,75 @@
             </div>
 
             {{-- Penyetor --}}
-            <div>
+            <div x-data="{
+                search: '',
+                open: false,
+                selectedId: @entangle('pelanggan_id').live,
+                get filteredPelanggans() {
+                    const data = this.$wire.pelanggans || [];
+                    if (this.search === '') {
+                        return data;
+                    }
+                    return data.filter((pelanggan) => {
+                        return pelanggan && pelanggan.nama && String(pelanggan.nama).toLowerCase().includes(this.search.toLowerCase());
+                    });
+                },
+                selectPelanggan(id) {
+                    this.selectedId = id;
+                    this.open = false;
+                    this.search = '';
+                },
+                getSelectedNama() {
+                    const data = this.$wire.pelanggans || [];
+                    let selected = data.find(p => p.id == this.selectedId);
+                    return selected && selected.nama ? selected.nama : 'Pilih Nama';
+                }
+            }" class="relative">
                 <label for="pelanggan_id" class="block mb-2 text-sm font-semibold text-gray-700 dark:text-white ">Pilih Penyetor</label>
-                <select wire:model.live="pelanggan_id" id="pelanggan_id" class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading
-                           focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white">
-                    <option selected>Pilih Nama</option>
-                    @foreach($pelanggans as $pelanggan)
-                    <option value="{{ $pelanggan->id }}">{{ $pelanggan->nama }}</option>
-                    @endforeach
-                </select>
+                
+                <div @click="open = !open" @click.outside="open = false" 
+                     class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white cursor-pointer flex justify-between items-center">
+                    <span x-text="getSelectedNama()" :class="{'text-gray-500 dark:text-gray-400': !selectedId}"></span>
+                    <svg class="w-4 h-4 ml-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+
+                <!-- Dropdown menu -->
+                <div x-show="open" style="display: none;"
+                     x-transition:enter="transition ease-out duration-100"
+                     x-transition:enter-start="opacity-0 scale-95"
+                     x-transition:enter-end="opacity-100 scale-100"
+                     x-transition:leave="transition ease-in duration-75"
+                     x-transition:leave-start="opacity-100 scale-100"
+                     x-transition:leave-end="opacity-0 scale-95"
+                     class="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg dark:bg-gray-700 dark:border-gray-600">
+                    
+                    <div class="p-2 border-b dark:border-gray-600">
+                        <input x-model="search" type="text" placeholder="Cari nama penyetor..." 
+                               class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+                               @click.stop>
+                    </div>
+                    
+                    <ul class="max-h-60 overflow-y-auto py-1">
+                        <li @click="selectPelanggan('')" 
+                            class="px-4 py-2 cursor-pointer hover:bg-green-50 dark:hover:bg-gray-600 dark:text-white text-sm text-gray-700">
+                            Pilih Nama
+                        </li>
+                        <template x-for="pelanggan in filteredPelanggans" :key="pelanggan.id">
+                            <li @click="selectPelanggan(pelanggan.id)" 
+                                class="px-4 py-2 cursor-pointer hover:bg-green-50 dark:hover:bg-gray-600 dark:text-white text-sm text-gray-700 flex justify-between items-center"
+                                :class="{'bg-green-50 dark:bg-gray-600': selectedId === pelanggan.id}">
+                                <span x-text="pelanggan.nama"></span>
+                                <svg x-show="selectedId === pelanggan.id" class="w-4 h-4 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </li>
+                        </template>
+                        <li x-show="filteredPelanggans.length === 0" class="px-4 py-2 text-gray-500 text-sm dark:text-gray-400">
+                            Penyetor tidak ditemukan.
+                        </li>
+                    </ul>
+                </div>
+                
                 @error('pelanggan_id')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                 @enderror
