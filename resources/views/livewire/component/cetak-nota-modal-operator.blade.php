@@ -27,18 +27,98 @@
                 </div>
 
                 <!-- Body -->
-                <div class="space-y-3 py-3 overflow-y-auto flex-1 no-scrollbar">
+                <div class="space-y-3 py-3 overflow-visible flex-1">
                     {{-- Dropdown pelanggan --}}
                     <div>
-                        <label class="block mb-2.5 text-sm font-medium text-heading dark:text-white">Pilih
-                            Penyetor</label>
-                        <select wire:model.live="pelanggan_id"
-                            class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
-                            <option value="">-- Pilih Penyetor --</option>
-                            @foreach($pelanggans as $p)
-                                <option value="{{ $p->id }}">{{ $p->nama }} - {{ $p->daerah }}</option>
-                            @endforeach
-                        </select>
+                        <div x-data="{
+                            search: '',
+                            open: false,
+                            selectedId: @entangle('pelanggan_id').live,
+                            get pelanggansArray() {
+                                // Ambil data reaktif Livewire setiap saat
+                                return Object.values(this.$wire.pelanggans || []);
+                            },
+                            get filteredPelanggans() {
+                                let data = this.pelanggansArray;
+                                if (this.search === '') {
+                                    return data;
+                                }
+                                const term = this.search.toLowerCase();
+                                return data.filter((pelanggan) => {
+                                    if (!pelanggan) return false;
+                                    const nama = pelanggan.nama ? String(pelanggan.nama).toLowerCase() : '';
+                                    const daerah = pelanggan.daerah ? String(pelanggan.daerah).toLowerCase() : '';
+                                    return nama.includes(term) || daerah.includes(term);
+                                });
+                            },
+                            selectPelanggan(id) {
+                                this.selectedId = id;
+                                this.open = false;
+                                this.search = '';
+                            },
+                            getSelectedNama() {
+                                let data = this.pelanggansArray;
+                                let selected = data.find(p => p.id == this.selectedId);
+                                if (selected) {
+                                    return (selected.nama || '') + ' - ' + (selected.daerah || '');
+                                }
+                                return '-- Pilih Penyetor --';
+                            }
+                        }" class="relative">
+                            <label class="block mb-2.5 text-sm font-medium text-heading dark:text-white">Pilih
+                                Penyetor</label>
+
+                            <div @click="open = !open" @click.outside="open = false"
+                                class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body cursor-pointer flex justify-between items-center transition-colors">
+                                <span x-text="getSelectedNama()" :class="{'text-body': !selectedId}"></span>
+                                <svg class="w-4 h-4 ml-2 text-gray-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+
+                            <!-- Dropdown menu -->
+                            <div x-show="open" style="display: none;"
+                                x-transition:enter="transition ease-out duration-100"
+                                x-transition:enter-start="opacity-0 scale-95"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-75"
+                                x-transition:leave-start="opacity-100 scale-100"
+                                x-transition:leave-end="opacity-0 scale-95"
+                                class="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg dark:bg-gray-700 dark:border-gray-600">
+
+                                <div class="p-2 border-b dark:border-gray-600">
+                                    <input x-model="search" type="text" placeholder="Cari nama atau daerah..."
+                                        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-brand dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+                                        @click.stop>
+                                </div>
+
+                                <ul class="max-h-60 overflow-y-auto py-1">
+                                    <li @click="selectPelanggan('')"
+                                        class="px-4 py-2 cursor-pointer hover:bg-neutral-secondary-medium dark:hover:bg-gray-600 dark:text-white text-sm text-heading">
+                                        -- Pilih Penyetor --
+                                    </li>
+                                    <template x-for="pelanggan in filteredPelanggans" :key="pelanggan.id">
+                                        <li @click="selectPelanggan(pelanggan.id)"
+                                            class="px-4 py-2 cursor-pointer hover:bg-neutral-secondary-medium dark:hover:bg-gray-600 dark:text-white text-sm text-heading flex justify-between items-center"
+                                            :class="{'bg-neutral-secondary-medium dark:bg-gray-600': selectedId === pelanggan.id}">
+                                            <span
+                                                x-text="(pelanggan.nama || '') + ' - ' + (pelanggan.daerah || '')"></span>
+                                            <svg x-show="selectedId === pelanggan.id" class="w-4 h-4 text-green-500"
+                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M5 13l4 4L19 7"></path>
+                                            </svg>
+                                        </li>
+                                    </template>
+                                    <li x-show="filteredPelanggans.length === 0"
+                                        class="px-4 py-2 text-body text-sm dark:text-gray-400">
+                                        Penyetor tidak ditemukan.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
 
                         @if($tanggal_list)
                             <label class="block mb-2.5 mt-2.5 text-sm font-medium text-heading">Pilih Tanggal</label>
@@ -124,6 +204,7 @@
             </div>
         </div>
     </div>
+
     <script>
         // Open in New Tab Nota PDF
         // document.addEventListener('livewire:initialized', () => {

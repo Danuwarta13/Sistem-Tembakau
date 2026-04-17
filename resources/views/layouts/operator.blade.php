@@ -10,7 +10,7 @@
     {{-- Icon --}}
     <link rel="shortcut icon" href="{{ asset('svg/logo.svg') }}" type="image/x-icon">
 
-    @vite('resources/css/app.css')
+    @vite(['resources/js/app.js', 'resources/css/app.css'])
 </head>
 
 <body>
@@ -54,19 +54,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.0/dist/flowbite.min.js"></script>
     <script>
-        // Function Fullscreen
-        document.addEventListener('livewire:initialized', () => {
-            Livewire.on('fullscreen-toggle', () => {
-
-                if (!document.fullscreenElement) {
-                    document.documentElement.requestFullscreen();
-                    localStorage.setItem('fullscreen_active', '1');
-                } else {
-                    document.exitFullscreen();
-                    localStorage.removeItem('fullscreen_active');
-                }
-            });
-        });
 
         // DarkMode
         document.addEventListener('livewire:init', () => {
@@ -84,12 +71,16 @@
             });
         });
 
-        // Load tema saat pertama kali halaman dibuka
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        if (savedTheme === 'dark') {
-            document.documentElement.classList.add('dark');
-        }
+        // Saat navigasi (wire:navigate) atau refresh halaman
+        document.addEventListener('livewire:navigated', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
 
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
     </script>
 
 

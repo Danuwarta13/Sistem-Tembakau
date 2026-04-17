@@ -45,7 +45,16 @@ class CetakNotaModalOperator extends Component
     #[On('penyetor-created')]
     public function mount()
     {
-        $this->pelanggans = Pelanggans::all();
+        $this->pelanggans = Pelanggans::all()->toArray();
+    }
+
+    #[On('barang-created')]
+    public function refreshData()
+    {
+        // Jika sebelumnya sudah ada pelanggan yang dipilih, reload isi tanggal & barang
+        if ($this->pelanggan_id) {
+            $this->updatedPelangganId($this->pelanggan_id);
+        }
     }
 
     // 🔥 update barang ketika dropdown berubah

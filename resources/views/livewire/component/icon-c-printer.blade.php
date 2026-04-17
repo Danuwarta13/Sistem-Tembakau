@@ -16,22 +16,58 @@
     <script>
         // PRINT BLUETOOTH
 
-        // let device;
-        let characteristic;
+        // var device;
+        var characteristic;
 
-        const SERVICE_UUID = '000018f0-0000-1000-8000-00805f9b34fb';
+        var SERVICE_UUID = '000018f0-0000-1000-8000-00805f9b34fb';
 
-        // CONNECT (PAKSA PILIH DEVICE)
+        function initAutoConnect() {
+            if (navigator.bluetooth && navigator.bluetooth.getDevices) {
+                navigator.bluetooth.getDevices().then(devices => {
+                    console.log("Daftar device tersimpan:", devices);
+                    if (devices.length > 0) {
+                        console.log("Mencoba auto-connect ke device sebelumnya...");
+                        var device = devices[0];
+                        connectToDevice(device);
+                    } else {
+                        console.log("Tidak ada histori device bluetooth yang tersimpan.");
+                    }
+                }).catch(err => {
+                    console.log("Auto-connect getDevices gagal:", err);
+                });
+            } else {
+                console.log("Fitur auto-connect (getDevices) tidak didukung browser ini.");
+            }
+        }
+
+        // Panggil langsung (berguna jika script dimuat via Livewire setelah DOMContentLoaded terlewat)
+        initAutoConnect();
+
+        // Panggil auto-connect saat awal load
+        document.addEventListener('DOMContentLoaded', initAutoConnect);
+        // Dan panggil saat Livewire navigasi jika menggunakan wire:navigate
+        document.addEventListener('livewire:navigated', initAutoConnect);
+
+        // CONNECT (PAKSA PILIH DEVICE BARU via klik tombol)
         async function connectPrinter() {
             console.log("connectPrinter");
 
             try {
-                device = await navigator.bluetooth.requestDevice({
+                var device = await navigator.bluetooth.requestDevice({
                     acceptAllDevices: true,
                     optionalServices: [SERVICE_UUID]
                 });
 
-                const server = await device.gatt.connect();
+                await connectToDevice(device);
+
+            } catch (err) {
+                console.log("Batal pilih device / error:", err);
+            }
+        }
+
+        async function connectToDevice(selectedDevice) {
+            try {
+                const server = await selectedDevice.gatt.connect();
                 const service = await server.getPrimaryService(SERVICE_UUID);
 
                 const characteristics = await service.getCharacteristics();
@@ -51,11 +87,15 @@
                 console.log("PAKAI CHAR:", characteristic);
                 console.log("PROPERTIES:", characteristic.properties);
 
+                selectedDevice.addEventListener('gattserverdisconnected', function (event) {
+                    console.log("Bluetooth tertutup/disconnected:", event.target.name);
+                    characteristic = null;
+                });
 
                 Livewire.dispatch('printer-connected');
 
             } catch (err) {
-                console.log(err);
+                console.log("Gagal melakukan koneksi ke device:", err);
             }
         }
 
