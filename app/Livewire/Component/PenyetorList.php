@@ -17,7 +17,7 @@ class PenyetorList extends Component
     #[On('updated-penyetor')]
     public function refreshPenyetorList()
     {
-        // This method will be called when a penyetor is created or updated
+        // function untuk refresh data yang baru dibuat atau di update
         $this->resetPage();
     }
 

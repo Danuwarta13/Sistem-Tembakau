@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
 
     @vite('resources/css/app.css')
 </head>
+
 <body>
 
 
@@ -23,7 +25,8 @@
 
                     <a href="{{ route('operator.dashboard') }}" class="flex ms-2 md:me-24">
                         <img src="{{ asset('svg/logo.svg') }}" class="h-6 me-3" alt="FlowBite Logo" />
-                        <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">TembakauKu</span>
+                        <span
+                            class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">TembakauKu</span>
                     </a>
                 </div>
 
@@ -51,20 +54,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@4.0.0/dist/flowbite.min.js"></script>
     <script>
-        // Function Fullscreen
-        document.addEventListener('livewire:initialized', () => {
-            Livewire.on('fullscreen-toggle', () => {
-
-                if (!document.fullscreenElement) {
-                    document.documentElement.requestFullscreen();
-                    localStorage.setItem('fullscreen_active', '1');
-                } else {
-                    document.exitFullscreen();
-                    localStorage.removeItem('fullscreen_active');
-                }
-            });
-        });
-
         // DarkMode
         document.addEventListener('livewire:init', () => {
             Livewire.on('theme-changed', data => {
@@ -81,13 +70,18 @@
             });
         });
 
-        // Load tema saat pertama kali halaman dibuka
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        if (savedTheme === 'dark') {
-            document.documentElement.classList.add('dark');
-        }
+        // Saat navigasi (wire:navigate) atau refresh halaman
+        document.addEventListener('livewire:navigated', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
 
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
     </script>
 
 </body>
+
 </html>

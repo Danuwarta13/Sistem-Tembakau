@@ -1,4 +1,4 @@
-<div x-data="{ open: @entangle('open') }">
+<div x-data="{ open: @entangle('open'), openLogout: false }">
 
     <!-- Overlay -->
     <div x-show="open" x-cloak class="fixed inset-0 bg-black/60 backdrop-blur-sm z-20 lg:hidden">
@@ -67,20 +67,45 @@
                 </li>
 
                 <li>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit"
-                            class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-green-600 group w-full text-left">
-                            <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-green-600"
-                                aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2" />
-                            </svg>
-                            <span class="flex-1 ms-3 whitespace-nowrap">Logout</span>
-                        </button>
-                    </form>
+                    <button @click="openLogout = true"
+                        class="flex items-center px-2 py-1.5 text-body rounded-base hover:bg-neutral-tertiary hover:text-green-600 group w-full text-left">
+
+                        <svg class="shrink-0 w-5 h-5 transition duration-75 group-hover:text-green-600"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2" />
+                        </svg>
+
+                        <span class="flex-1 ms-3 whitespace-nowrap">Logout</span>
+                    </button>
+
+                    <!-- Modal Confirmasi Logout -->
+                    <template x-teleport="body">
+                        <div x-show="openLogout" x-cloak
+                            class="fixed inset-0 flex items-center justify-center bg-black/80 z-50">
+
+                            <div @click.away="openLogout = false" class="bg-white rounded-lg p-6 w-80">
+
+                                <h2 class="text-lg font-semibold mb-4">Konfirmasi</h2>
+                                <p class="mb-4">Yakin mau logout?</p>
+
+                                <div class="flex justify-end gap-2">
+                                    <button @click="openLogout = false"
+                                        class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
+                                        Batal
+                                    </button>
+
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit"
+                                            class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+                                            Logout
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
                 </li>
             </ul>
         </div>
