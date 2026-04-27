@@ -13,9 +13,8 @@ class PelangganSeeder extends Seeder
      */
     public function run(): void
     {
-        Pelanggans::create([
-            'nama' => 'John Doe',
-            'daerah' => 'Jakarta',
-        ]);
+        // Pelanggans::create(['nama' => 'Budi Santoso', 'daerah' => 'Jakarta']);
+        // Pelanggans::create(['nama' => 'Agus Pratama', 'daerah' => 'Surabaya']);
+        // Pelanggans::create(['nama' => 'Siti Aminah', 'daerah' => 'Bandung']);
     }
 }

@@ -14,6 +14,6 @@ class BarangSeeder extends Seeder
     public function run(): void
     {
         // Buat 100 data barang
-        // Barangs::factory(4000)->create();
+        // Barangs::factory(100)->create();
     }
 }

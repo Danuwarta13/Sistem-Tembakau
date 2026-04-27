@@ -121,99 +121,99 @@
                         </div>
 
                         @if($tanggal_list)
-                        <div x-data="{
-                            search: '',
-                            open: false,
-                            selectedTanggal: @entangle('tanggal').live,
-                            get tglArray() {
-                                return Object.values(this.$wire.tanggal_list || []);
-                            },
-                            formatDate(dateStr) {
-                                if(!dateStr) return '';
-                                const date = new Date(dateStr);
-                                if(isNaN(date)) return dateStr;
-                                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-                                const d = String(date.getDate()).padStart(2, '0');
-                                const m = months[date.getMonth()];
-                                const y = date.getFullYear();
-                                return `${d} ${m} ${y}`;
-                            },
-                            get filteredTgl() {
-                                let data = this.tglArray;
-                                if (this.search === '') {
-                                    return data;
-                                }
-                                const term = this.search.toLowerCase();
-                                return data.filter((tgl) => {
-                                    if (!tgl) return false;
-                                    const formatted = this.formatDate(tgl).toLowerCase();
-                                    return tgl.toLowerCase().includes(term) || formatted.includes(term);
-                                });
-                            },
-                            selectTgl(tgl) {
-                                this.selectedTanggal = tgl;
-                                this.open = false;
-                                this.search = '';
-                            },
-                            getSelectedFormat() {
-                                if (this.selectedTanggal) {
-                                    return this.formatDate(this.selectedTanggal);
-                                }
-                                return '-- Pilih Tanggal --';
-                            }
-                        }" class="relative mt-2.5">
-                            <label class="block mb-2.5 text-sm font-medium text-heading">Pilih Tanggal</label>
+                            <div x-data="{
+                                                            search: '',
+                                                            open: false,
+                                                            selectedTanggal: @entangle('tanggal').live,
+                                                            get tglArray() {
+                                                                return Object.values(this.$wire.tanggal_list || []);
+                                                            },
+                                                            formatDate(dateStr) {
+                                                                if(!dateStr) return '';
+                                                                const date = new Date(dateStr);
+                                                                if(isNaN(date)) return dateStr;
+                                                                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+                                                                const d = String(date.getDate()).padStart(2, '0');
+                                                                const m = months[date.getMonth()];
+                                                                const y = date.getFullYear();
+                                                                return `${d} ${m} ${y}`;
+                                                            },
+                                                            get filteredTgl() {
+                                                                let data = this.tglArray;
+                                                                if (this.search === '') {
+                                                                    return data;
+                                                                }
+                                                                const term = this.search.toLowerCase();
+                                                                return data.filter((tgl) => {
+                                                                    if (!tgl) return false;
+                                                                    const formatted = this.formatDate(tgl).toLowerCase();
+                                                                    return tgl.toLowerCase().includes(term) || formatted.includes(term);
+                                                                });
+                                                            },
+                                                            selectTgl(tgl) {
+                                                                this.selectedTanggal = tgl;
+                                                                this.open = false;
+                                                                this.search = '';
+                                                            },
+                                                            getSelectedFormat() {
+                                                                if (this.selectedTanggal) {
+                                                                    return this.formatDate(this.selectedTanggal);
+                                                                }
+                                                                return '-- Pilih Tanggal --';
+                                                            }
+                                                        }" class="relative mt-2.5">
+                                <label class="block mb-2.5 text-sm font-medium text-heading">Pilih Tanggal</label>
 
-                            <div @click="open = !open" @click.outside="open = false"
-                                class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body cursor-pointer flex justify-between items-center transition-colors">
-                                <span x-text="getSelectedFormat()" :class="{'text-body': !selectedTanggal}"></span>
-                                <svg class="w-4 h-4 ml-2 text-gray-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 9l-7 7-7-7"></path>
-                                </svg>
-                            </div>
-
-                            <!-- Dropdown menu -->
-                            <div x-show="open" style="display: none;"
-                                x-transition:enter="transition ease-out duration-100"
-                                x-transition:enter-start="opacity-0 scale-95"
-                                x-transition:enter-end="opacity-100 scale-100"
-                                x-transition:leave="transition ease-in duration-75"
-                                x-transition:leave-start="opacity-100 scale-100"
-                                x-transition:leave-end="opacity-0 scale-95"
-                                class="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg dark:bg-gray-700 dark:border-gray-600">
-
-                                <div class="p-2 border-b dark:border-gray-600">
-                                    <input x-model="search" type="text" placeholder="Cari tanggal..."
-                                        class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-brand dark:bg-gray-800 dark:border-gray-600 dark:text-white"
-                                        @click.stop>
+                                <div @click="open = !open" @click.outside="open = false"
+                                    class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body cursor-pointer flex justify-between items-center transition-colors">
+                                    <span x-text="getSelectedFormat()" :class="{'text-body': !selectedTanggal}"></span>
+                                    <svg class="w-4 h-4 ml-2 text-gray-500" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7"></path>
+                                    </svg>
                                 </div>
 
-                                <ul class="max-h-60 overflow-y-auto py-1">
-                                    <li @click="selectTgl('')"
-                                        class="px-4 py-2 cursor-pointer hover:bg-neutral-secondary-medium dark:hover:bg-gray-600 dark:text-white text-sm text-heading">
-                                        -- Pilih Tanggal --
-                                    </li>
-                                    <template x-for="tgl in filteredTgl" :key="tgl">
-                                        <li @click="selectTgl(tgl)"
-                                            class="px-4 py-2 cursor-pointer hover:bg-neutral-secondary-medium dark:hover:bg-gray-600 dark:text-white text-sm text-heading flex justify-between items-center"
-                                            :class="{'bg-neutral-secondary-medium dark:bg-gray-600': selectedTanggal === tgl}">
-                                            <span x-text="formatDate(tgl)"></span>
-                                            <svg x-show="selectedTanggal === tgl" class="w-4 h-4 text-green-500"
-                                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M5 13l4 4L19 7"></path>
-                                            </svg>
+                                <!-- Dropdown menu -->
+                                <div x-show="open" style="display: none;"
+                                    x-transition:enter="transition ease-out duration-100"
+                                    x-transition:enter-start="opacity-0 scale-95"
+                                    x-transition:enter-end="opacity-100 scale-100"
+                                    x-transition:leave="transition ease-in duration-75"
+                                    x-transition:leave-start="opacity-100 scale-100"
+                                    x-transition:leave-end="opacity-0 scale-95"
+                                    class="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg dark:bg-gray-700 dark:border-gray-600">
+
+                                    <div class="p-2 border-b dark:border-gray-600">
+                                        <input x-model="search" type="text" placeholder="Cari tanggal..."
+                                            class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-brand dark:bg-gray-800 dark:border-gray-600 dark:text-white"
+                                            @click.stop>
+                                    </div>
+
+                                    <ul class="max-h-60 overflow-y-auto py-1">
+                                        <li @click="selectTgl('')"
+                                            class="px-4 py-2 cursor-pointer hover:bg-neutral-secondary-medium dark:hover:bg-gray-600 dark:text-white text-sm text-heading">
+                                            -- Pilih Tanggal --
                                         </li>
-                                    </template>
-                                    <li x-show="filteredTgl.length === 0"
-                                        class="px-4 py-2 text-body text-sm dark:text-gray-400">
-                                        Tanggal tidak ditemukan.
-                                    </li>
-                                </ul>
+                                        <template x-for="tgl in filteredTgl" :key="tgl">
+                                            <li @click="selectTgl(tgl)"
+                                                class="px-4 py-2 cursor-pointer hover:bg-neutral-secondary-medium dark:hover:bg-gray-600 dark:text-white text-sm text-heading flex justify-between items-center"
+                                                :class="{'bg-neutral-secondary-medium dark:bg-gray-600': selectedTanggal === tgl}">
+                                                <span x-text="formatDate(tgl)"></span>
+                                                <svg x-show="selectedTanggal === tgl" class="w-4 h-4 text-green-500"
+                                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M5 13l4 4L19 7"></path>
+                                                </svg>
+                                            </li>
+                                        </template>
+                                        <li x-show="filteredTgl.length === 0"
+                                            class="px-4 py-2 text-body text-sm dark:text-gray-400">
+                                            Tanggal tidak ditemukan.
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
                         @endif
                     </div>
 
@@ -405,10 +405,10 @@
 
                 // ===== HEADER TABEL =====
                 lines.push(
-                    col("No", 3) +
+                    col("Ns", 5) +
                     col("Gr", 3) +
-                    col("Br", 4) +
-                    col("Nt", 4) +
+                    col("Br", 3) +
+                    col("Nt", 3) +
                     col("Harga", 8, 'right') +
                     col("Jml", 10, 'right') + "\n"
                 );
@@ -418,10 +418,10 @@
                 // ===== ITEMS =====
                 data.items.forEach((item, index) => {
                     lines.push(
-                        col(item.no_seri, 3) +
+                        col(item.no_seri, 5) +
                         col(item.grade, 3) +
-                        col(angkaFix(item.bruto), 4) +
-                        col(angkaFix(item.netto), 4) +
+                        col(angkaFix(item.bruto), 3) +
+                        col(angkaFix(item.netto), 3) +
                         col(angka(item.harga), 8, 'right') +
                         col(angka(item.jumlah), 10, 'right') +
                         "\n"
@@ -431,6 +431,7 @@
                 lines.push(line());
 
                 // ===== TOTAL =====
+                lines.push(padText("Jumlah Keranjang", angka(data.totalBarang)));
                 lines.push(padText("Total", rupiah(data.totalJumlah)));
                 lines.push(padText("Pajak", rupiah(data.totalPajak)));
                 lines.push(padText("Kuli", rupiah(data.totalKuli)));

@@ -27,11 +27,16 @@ class BarangsFactory extends Factory
 
         // Jika array penampung belum punya grade tersebut → ambil dari database
         if (!isset($seriPerGrade[$grade])) {
-            $seriPerGrade[$grade] = Barangs::where('grade', $grade)->max('no_seri') ?? 0;
+            $maxDb = Barangs::where('grade', $grade)->max('no_seri');
+            // Jika data kosong atau max < 2340, kita paksa mulai dari 2340 untuk test 4 digit
+            $seriPerGrade[$grade] = ($maxDb && $maxDb > 2340) ? $maxDb : 2340;
         }
 
         // Tambah nomor seri hanya untuk grade ini
         $seriPerGrade[$grade]++;
+
+        // Ambil data pelanggan yang ada di database secara acak
+        $pelanggan = Pelanggans::inRandomOrder()->first();
 
         // Hitung nilai lain
         $bruto = $this->faker->numberBetween(40, 100);
@@ -40,16 +45,16 @@ class BarangsFactory extends Factory
         $jumlah = $harga * $netto;
 
         return [
-            'tanggal' => $this->faker->date(),
-            'nama' => $this->faker->name(),
-            'daerah' => $this->faker->city(),
+            'tanggal' => now()->toDateString(), // <-- Set ke hari ini agar mudah dicari di dropdown
+            'nama' => $pelanggan ? $pelanggan->nama : $this->faker->name(),
+            'daerah' => $pelanggan ? $pelanggan->daerah : $this->faker->city(),
             'no_seri' => $seriPerGrade[$grade],   // ← sudah urut per grade
             'grade' => $grade,
             'bruto' => $bruto,
             'netto' => $netto,
             'harga' => $harga,
             'jumlah' => $jumlah,
-            'pelanggan_id' => Pelanggans::inRandomOrder()->first()?->id ?? 1,
+            'pelanggan_id' => $pelanggan ? $pelanggan->id : 1,
         ];
     }
 }

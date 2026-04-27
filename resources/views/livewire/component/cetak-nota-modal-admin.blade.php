@@ -121,46 +121,46 @@
 
                         @if($tanggal_list)
                             <div x-data="{
-                                            search: '',
-                                            open: false,
-                                            selectedTanggal: @entangle('tanggal').live,
-                                            get tglArray() {
-                                                return Object.values(this.$wire.tanggal_list || []);
-                                            },
-                                            formatDate(dateStr) {
-                                                if(!dateStr) return '';
-                                                const date = new Date(dateStr);
-                                                if(isNaN(date)) return dateStr;
-                                                const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-                                                const d = String(date.getDate()).padStart(2, '0');
-                                                const m = months[date.getMonth()];
-                                                const y = date.getFullYear();
-                                                return `${d} ${m} ${y}`;
-                                            },
-                                            get filteredTgl() {
-                                                let data = this.tglArray;
-                                                if (this.search === '') {
-                                                    return data;
+                                                search: '',
+                                                open: false,
+                                                selectedTanggal: @entangle('tanggal').live,
+                                                get tglArray() {
+                                                    return Object.values(this.$wire.tanggal_list || []);
+                                                },
+                                                formatDate(dateStr) {
+                                                    if(!dateStr) return '';
+                                                    const date = new Date(dateStr);
+                                                    if(isNaN(date)) return dateStr;
+                                                    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+                                                    const d = String(date.getDate()).padStart(2, '0');
+                                                    const m = months[date.getMonth()];
+                                                    const y = date.getFullYear();
+                                                    return `${d} ${m} ${y}`;
+                                                },
+                                                get filteredTgl() {
+                                                    let data = this.tglArray;
+                                                    if (this.search === '') {
+                                                        return data;
+                                                    }
+                                                    const term = this.search.toLowerCase();
+                                                    return data.filter((tgl) => {
+                                                        if (!tgl) return false;
+                                                        const formatted = this.formatDate(tgl).toLowerCase();
+                                                        return tgl.toLowerCase().includes(term) || formatted.includes(term);
+                                                    });
+                                                },
+                                                selectTgl(tgl) {
+                                                    this.selectedTanggal = tgl;
+                                                    this.open = false;
+                                                    this.search = '';
+                                                },
+                                                getSelectedFormat() {
+                                                    if (this.selectedTanggal) {
+                                                        return this.formatDate(this.selectedTanggal);
+                                                    }
+                                                    return '-- Pilih Tanggal --';
                                                 }
-                                                const term = this.search.toLowerCase();
-                                                return data.filter((tgl) => {
-                                                    if (!tgl) return false;
-                                                    const formatted = this.formatDate(tgl).toLowerCase();
-                                                    return tgl.toLowerCase().includes(term) || formatted.includes(term);
-                                                });
-                                            },
-                                            selectTgl(tgl) {
-                                                this.selectedTanggal = tgl;
-                                                this.open = false;
-                                                this.search = '';
-                                            },
-                                            getSelectedFormat() {
-                                                if (this.selectedTanggal) {
-                                                    return this.formatDate(this.selectedTanggal);
-                                                }
-                                                return '-- Pilih Tanggal --';
-                                            }
-                                        }" class="relative mt-2.5">
+                                            }" class="relative mt-2.5">
                                 <label class="block mb-2.5 text-sm font-medium text-heading">Pilih Tanggal</label>
 
                                 <div @click="open = !open" @click.outside="open = false"
@@ -372,10 +372,10 @@
 
                 // ===== HEADER TABEL =====
                 lines.push(
-                    col("No", 3) +
+                    col("Ns", 5) +
                     col("Gr", 3) +
-                    col("Br", 4) +
-                    col("Nt", 4) +
+                    col("Br", 3) +
+                    col("Nt", 3) +
                     col("Harga", 8, 'right') +
                     col("Jml", 10, 'right') + "\n"
                 );
@@ -385,10 +385,10 @@
                 // ===== ITEMS =====
                 data.items.forEach((item, index) => {
                     lines.push(
-                        col(item.no_seri, 3) +
+                        col(item.no_seri, 5) +
                         col(item.grade, 3) +
-                        col(angkaFix(item.bruto), 4) +
-                        col(angkaFix(item.netto), 4) +
+                        col(angkaFix(item.bruto), 3) +
+                        col(angkaFix(item.netto), 3) +
                         col(angka(item.harga), 8, 'right') +
                         col(angka(item.jumlah), 10, 'right') +
                         "\n"
@@ -398,6 +398,7 @@
                 lines.push(line());
 
                 // ===== TOTAL =====
+                lines.push(padText("Jumlah Keranjang", angka(data.totalBarang)));
                 lines.push(padText("Total", rupiah(data.totalJumlah)));
                 lines.push(padText("Pajak", rupiah(data.totalPajak)));
                 lines.push(padText("Kuli", rupiah(data.totalKuli)));
