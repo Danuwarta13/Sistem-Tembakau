@@ -22,7 +22,7 @@ class CreateKeranjangForm extends Component
 
     public $no_seri = '';
 
-    #[Validate('required|string|min:1|regex:/^[A-Za-z]+$/')]
+    #[Validate('required|in:A,B,C')]
     public $grade = '';
 
     #[Validate('required|numeric')]
@@ -82,17 +82,16 @@ class CreateKeranjangForm extends Component
 
     public function updatedGrade()
     {
-        // Ubaah grade ke huruf kapital
-        $this->grade = strtoupper($this->grade);
-
-        // Validasi hanya huruf
+        // Validasi
         $this->validateOnly('grade');
 
         // Ambil no seri terakhir berdasarkan grade
-        $last = Barangs::where('grade', $this->grade)->max('no_seri');
-
-        // Jika belum ada data, mulai dari 1
-        $this->no_seri = $last ? $last + 1 : 1;
+        if ($this->grade) {
+            $last = Barangs::where('grade', $this->grade)->max('no_seri');
+            $this->no_seri = $last ? $last + 1 : 1;
+        } else {
+            $this->no_seri = '';
+        }
     }
 
     // Update netto saat bruto diubah

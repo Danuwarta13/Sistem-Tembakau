@@ -24,7 +24,7 @@ class EditKeranjangForm extends Component
     #[Validate('required')]
     public $no_seri = '';
 
-    #[Validate('required|string|min:1|regex:/^[A-Za-z]+$/')]
+    #[Validate('required|in:A,B,C')]
     public $grade = '';
 
     #[Validate('required|numeric')]
@@ -46,6 +46,9 @@ class EditKeranjangForm extends Component
 
     public $showModal = false;
 
+    public $original_grade = '';
+    public $original_no_seri = '';
+
     protected $listeners = ['openEditModal' => 'loadBarang'];
 
 
@@ -66,6 +69,8 @@ class EditKeranjangForm extends Component
         $this->daerah = $barang->daerah;
         $this->no_seri = $barang->no_seri;
         $this->grade = $barang->grade;
+        $this->original_grade = $barang->grade;
+        $this->original_no_seri = $barang->no_seri;
         $this->bruto = $barang->bruto;
         $this->netto = $barang->netto;
         $this->harga = number_format($barang->harga, 0, ',', '.');
@@ -92,14 +97,19 @@ class EditKeranjangForm extends Component
 
     public function updatedGrade()
     {
-        // Ubah huruf grade ke kapital
-        $this->grade = strtoupper($this->grade);
+        // Validasi
+        $this->validateOnly('grade');
 
-        // Ambil no seri terakhir berdasarkan grade
-        $last = Barangs::where('grade', $this->grade)->max('no_seri');
-
-        // Jika belum ada data, mulai dari 1
-        $this->no_seri = $last ? $last + 1 : 1;
+        // Jika grade dikembalikan ke grade awal barang ini, pakai no seri awalnya
+        if ($this->grade === $this->original_grade) {
+            $this->no_seri = $this->original_no_seri;
+        } else if ($this->grade) {
+            // Jika grade berubah, ambil no seri terakhir dari grade baru
+            $last = Barangs::where('grade', $this->grade)->max('no_seri');
+            $this->no_seri = $last ? $last + 1 : 1;
+        } else {
+            $this->no_seri = '';
+        }
     }
 
     // Update netto saat bruto diubah

@@ -62,10 +62,13 @@
                         <div>
                             <label for=""
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Grade</label>
-                            <input wire:model.live="grade" type="text" name="grade" id="grade"
-                                oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="Grade">
+                            <select wire:model.live="grade" id="grade"
+                                class="w-full px-3 py-2.5 text-sm rounded-lg border border-default-medium bg-neutral-secondary-medium text-heading focus:ring-2 focus:ring-green-500 focus:border-green-500 shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder:text-gray-400 dark:text-white">
+                                <option value="">-- Pilih Grade --</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                            </select>
                             @error('grade')
                                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
                             @enderror
