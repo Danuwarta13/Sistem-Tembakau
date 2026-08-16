@@ -198,7 +198,8 @@ class EditKeranjangForm extends Component
 
     public function delete()
     {
-        Barangs::where('id', $this->barangId)->delete();
+        $barang = Barangs::findOrFail($this->barangId);
+        $barang->delete();
 
         // Tutup modal delete
         $this->showDeleteModal = false;
