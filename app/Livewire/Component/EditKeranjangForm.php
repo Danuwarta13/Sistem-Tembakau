@@ -24,7 +24,7 @@ class EditKeranjangForm extends Component
     #[Validate('required')]
     public $no_seri = '';
 
-    #[Validate('required|in:A,B,C')]
+    #[Validate('required|in:A,B,C,W')]
     public $grade = '';
 
     #[Validate('required|numeric')]

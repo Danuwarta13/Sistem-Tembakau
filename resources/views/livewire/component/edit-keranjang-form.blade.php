@@ -52,6 +52,7 @@
                                 <option value="A">A</option>
                                 <option value="B">B</option>
                                 <option value="C">C</option>
+                                <option value="W">W</option>
                             </select>
                             @error('grade')
                             <p class="mt-1 text-xs text-red-600">{{ $message }}</p>

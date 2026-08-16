@@ -10,6 +10,9 @@
 
             <!-- CARD C -->
             @livewire('component.dashboard-grade-c')
+
+            <!-- CARD W -->
+            @livewire('component.dashboard-grade-w')
         </div>
 
         {{--Total --}}
