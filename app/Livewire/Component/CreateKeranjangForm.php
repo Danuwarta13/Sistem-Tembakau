@@ -108,7 +108,7 @@ class CreateKeranjangForm extends Component
         if ($this->bruto !== null && is_numeric($this->bruto)) {
 
             // Aturan perhitungan netto otomatis
-            if ($this->bruto > 51) {
+            if ($this->bruto >= 51) {
                 $this->netto = $this->bruto - 3;
             } else {
                 $this->netto = $this->bruto - 2;
