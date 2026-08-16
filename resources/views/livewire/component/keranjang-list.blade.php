@@ -79,7 +79,7 @@
 
                     <td class="px-6 py-4">
                         <button wire:click="edit({{ $barang->id }})" class="block text-white bg-blue-500 hover:bg-blue-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-300" type="button">
-                            Edit
+                            Editt
                         </button>
                     </td>
                 </tr>
