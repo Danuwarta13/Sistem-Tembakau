@@ -65,18 +65,21 @@ class CreateKeranjangForm extends Component
     }
 
     // Update nama, daerah, no_seri saat pelanggan diubah
-    public function updatedPelangganId($id)
+    public function updatedPelangganId($id, $oldValue = null)
     {
         // Jika ada ID dipilih dari dropdown
         if ($id) {
             // Ambil data pelanggan berdasarkan ID
-            $pelanggan = Pelanggans::find($id);
+            $pelanggan = Pelanggans::query()->find($id);
 
             // Jika data ditemukan, isi otomatis field nama & daerah
             if ($pelanggan) {
                 $this->nama = $pelanggan->nama;
                 $this->daerah = $pelanggan->daerah;
             }
+        } else {
+            $this->nama = '';
+            $this->daerah = '';
         }
     }
 
@@ -87,8 +90,12 @@ class CreateKeranjangForm extends Component
 
         // Ambil no seri terakhir berdasarkan grade
         if ($this->grade) {
-            $last = Barangs::where('grade', $this->grade)->max('no_seri');
-            $this->no_seri = $last ? $last + 1 : 1;
+            $last = Barangs::query()
+                ->where('grade', $this->grade)
+                ->orderByDesc('no_seri')
+                ->value('no_seri');
+
+            $this->no_seri = is_numeric($last) ? ((int) $last + 1) : 1;
         } else {
             $this->no_seri = '';
         }
@@ -101,7 +108,7 @@ class CreateKeranjangForm extends Component
         if ($this->bruto !== null && is_numeric($this->bruto)) {
 
             // Aturan perhitungan netto otomatis
-            if ($this->bruto > 50) {
+            if ($this->bruto > 51) {
                 $this->netto = $this->bruto - 3;
             } else {
                 $this->netto = $this->bruto - 2;

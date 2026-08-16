@@ -61,7 +61,7 @@ class EditKeranjangForm extends Component
         $this->pelanggans = Pelanggans::all();
 
         // Muat data barang berdasarkan ID
-        $barang = Barangs::find($id);
+        $barang = Barangs::findOrFail($id);
 
         $this->barangId = $id;
         $this->tanggal = $barang->tanggal ? Carbon::parse($barang->tanggal)->format('Y-m-d') : null;
@@ -86,7 +86,7 @@ class EditKeranjangForm extends Component
     public function updatedPelangganId($value)
     {
         // Cari data pelanggan berdasarkan ID
-        $pel = Pelanggans::find($value);
+        $pel = Pelanggans::query()->find($value);
 
         // jika ditemukan, update nama dan daerah
         if ($pel) {
@@ -119,7 +119,7 @@ class EditKeranjangForm extends Component
         if ($this->bruto !== null && is_numeric($this->bruto)) {
 
             // Aturan perhitungan netto otomatis
-            if ($this->bruto > 50) {
+            if ($this->bruto > 51) {
                 $this->netto = $this->bruto - 3;
             } else {
                 $this->netto = $this->bruto - 2;
@@ -174,7 +174,8 @@ class EditKeranjangForm extends Component
         $validated = $this->validate();
 
         // Update ke database
-        Barangs::find($this->barangId)->update($validated);
+        $barang = Barangs::findOrFail($this->barangId);
+        $barang->update($validated);
 
         flash()
             ->option('position', 'top-right')
@@ -197,7 +198,7 @@ class EditKeranjangForm extends Component
 
     public function delete()
     {
-        Barangs::find($this->barangId)->delete();
+        Barangs::where('id', $this->barangId)->delete();
 
         // Tutup modal delete
         $this->showDeleteModal = false;
